@@ -9,5 +9,8 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@types/bun": "^1.2.19"
+  },
+  "exports": {
+    "./*": "./*"
   }
 }

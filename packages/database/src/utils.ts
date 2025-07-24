@@ -4,3 +4,9 @@ export const nanoid = customAlphabet(
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
   12
 );
+
+export function absoluteUrl(path: string = "/") {
+  path = path.startsWith("/") ? path : `/${path}`;
+
+  return `${process.env.BETTER_AUTH_URL}${path}`;
+}

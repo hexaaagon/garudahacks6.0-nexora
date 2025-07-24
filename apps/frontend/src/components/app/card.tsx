@@ -14,9 +14,9 @@ export default function CardClass({
   description: string;
 }) {
   return (
-    <Card>
+    <Card className="max-w-64 shadow-md rounded-md transition duration-300 hover:scale-103">
       <CardHeader>
-        <div className="font-bold shadow-md rounded-md text-2xl">
+        <div className="font-bold text-2xl border-b">
           <CardTitle>{title}</CardTitle>
         </div>
       </CardHeader>
