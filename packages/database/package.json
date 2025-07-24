@@ -11,5 +11,10 @@
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.44.3",
+    "drizzle-zod": "^0.8.2",
+    "postgres": "^3.4.7"
   }
 }

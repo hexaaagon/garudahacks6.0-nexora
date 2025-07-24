@@ -1,0 +1,13 @@
+{
+  "name": "@nexora/types",
+  "version": "1.0.0",
+  "types": "index.d.ts",
+  "type": "module",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/bun": "^1.2.19"
+  }
+}
