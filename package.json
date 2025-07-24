@@ -1,7 +1,8 @@
 {
-  "name": "Nexora",
+  "name": "gh",
   "private": true,
   "scripts": {
+    "preinstall": "npx only-allow bun",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",

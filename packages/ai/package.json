@@ -3,6 +3,9 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "preinstall": "npx only-allow bun"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },

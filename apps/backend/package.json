@@ -1,6 +1,7 @@
 {
   "name": "backend",
   "scripts": {
+    "preinstall": "npx only-allow bun",
     "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
