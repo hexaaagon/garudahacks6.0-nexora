@@ -1,7 +1,9 @@
+import CardClass from "@/components/app/card";
+
 export default function Class() {
   return (
     <div>
-      <p>test</p>
+      <CardClass />
     </div>
   );
 }

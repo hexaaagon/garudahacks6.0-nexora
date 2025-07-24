@@ -17,6 +17,9 @@ declare global {
       NEXT_PUBLIC_SUPABASE_URL: string;
       SUPABASE_SERVICE_ROLE_KEY: string;
       POSTGRES_URL_NON_POOLING: string;
+
+      BETTER_AUTH_SECRET: string;
+      BETTER_AUTH_URL: string;
     }
   }
 }
