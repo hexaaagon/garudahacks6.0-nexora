@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Link from "next/link";
 
 export function FormSignUp() {
   return (
@@ -26,6 +25,16 @@ export function FormSignUp() {
                 placeholder="me@example.com"
                 required
               />
+            </div>
+            <div className="grid gap-2">
+              <div className="flex items-left">
+                <Label htmlFor="Role">Role</Label>
+              </div>
+              <select name="Role" id="Role">
+                <option value="1">Option</option>
+                <option value="2">Teacher</option>
+                <option value="3">Student</option>
+              </select>
             </div>
             <div className="grid gap-2">
               <div className="flex items-left">

@@ -1,27 +1,28 @@
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 
-export default function CardClass() {
+export default function CardClass({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Card Title</CardTitle>
-        <CardDescription>Card Description</CardDescription>
-        <CardAction>Card Action</CardAction>
+        <div className="font-bold shadow-md rounded-md text-2xl">
+          <CardTitle>{title}</CardTitle>
+        </div>
       </CardHeader>
       <CardContent>
-        <p>Card Content</p>
+        <CardDescription>{description}</CardDescription>
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter>
     </Card>
   );
 }

@@ -15,8 +15,15 @@
       "dependsOn": ["^check-types"]
     },
     "dev": {
+      "inputs": [".env*"],
       "cache": false,
       "persistent": true
+    },
+
+    "db:generate": {
+      "dependsOn": ["^db:generate"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "cache": false
     }
   }
 }

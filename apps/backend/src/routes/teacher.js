@@ -1,103 +1,102 @@
-import { Hono } from 'hono'
+import { Hono } from "hono";
+import { drizzle } from "@nexora/database";
+const { db } = drizzle;
 
-const Routes_teacher = new Hono()
+const Routes_teacher = new Hono();
 
-
-const classroom = new Hono()
+const classroom = new Hono();
 
 //make class
-classroom.post('/', (c) => {
-    return c.text('Classroom created!')
-})
+classroom.post("/", async (c) => {
+  const data = await c.req.json();
+  await db.insert(classroom).values({
+    name: data.name,
+    grade: data.grade,
+    classroom: data.classroom,
+  });
+
+  return c.text("classroom created!");
+});
 // get all classrooms
-classroom.get('/', (c) => {
-    return c.text('All classrooms')
-})
+classroom.get("/", async (c) => {
+  const students = await db.select().from(classroom);
+  return c.json(students);
+});
 
 //class stuff
-classroom.delete('/:token', (c) => {
-    // delete by id
-    const token = c.req.param('token')
-    return c.text('All classrooms')
-})
-classroom.get('/:token', (c) => {
-    // get info of calssrom by id
-    const token = c.req.param('token')
-    return c.text(`Classroom token: ${token}`)
-})
-classroom.put('/:token', (c) => {
-    // update/edit by id
-    const token = c.req.param('token')
-    return c.text(`Classroom updated with token: ${token}`)
-})
+classroom.delete("/:token", (c) => {
+  // delete by id
+  const token = c.req.param("token");
+  return c.text("All classrooms");
+});
+classroom.get("/:token", (c) => {
+  // get info of calssrom by id
+  const token = c.req.param("token");
+  return c.text(`Classroom token: ${token}`);
+});
+classroom.put("/:token", (c) => {
+  // update/edit by id
+  const token = c.req.param("token");
+  return c.text(`Classroom updated with token: ${token}`);
+});
 
-
-
-const subject = new Hono()
+const subject = new Hono();
 //make class
-subject.post('/', (c) => {
-    return c.text('Classroom created!')
-})
+subject.post("/", (c) => {
+  return c.text("Classroom created!");
+});
 // get all classrooms
-subject.get('/', (c) => {
-    return c.text('All classrooms')
-})
+subject.get("/", (c) => {
+  return c.text("All classrooms");
+});
 
 //class stuff
-subject.delete('/:token', (c) => {
-    // delete by id
-    const token = c.req.param('token')
-    return c.text('All classrooms')
-})
-subject.get('/:token', (c) => {
-    // get info of calssrom by id
-    const token = c.req.param('token')
-    return c.text(`Classroom token: ${token}`)
-})
-subject.put('/:token', (c) => {
-    // update/edit by id
-    const token = c.req.param('token')
-    return c.text(`Classroom updated with token: ${token}`)
-})
+subject.delete("/:token", (c) => {
+  // delete by id
+  const token = c.req.param("token");
+  return c.text("All classrooms");
+});
+subject.get("/:token", (c) => {
+  // get info of calssrom by id
+  const token = c.req.param("token");
+  return c.text(`Classroom token: ${token}`);
+});
+subject.put("/:token", (c) => {
+  // update/edit by id
+  const token = c.req.param("token");
+  return c.text(`Classroom updated with token: ${token}`);
+});
 
-
-
-const question = new Hono()
+const question = new Hono();
 // add question
-question.post('/', (c) => {
-  return c.text('Question added!')
-})
+question.post("/", (c) => {
+  return c.text("Question added!");
+});
 
 //get all question
-question.get('/', (c) => {
-  return c.text('All questions')
-})
+question.get("/", (c) => {
+  return c.text("All questions");
+});
 
-
-question.put('/:token', (c) => {
-    // update/edit by id
-    const token = c.req.param('token')
-    return c.text(`Classroom updated with token: ${token}`)
-})
+question.put("/:token", (c) => {
+  // update/edit by id
+  const token = c.req.param("token");
+  return c.text(`Classroom updated with token: ${token}`);
+});
 // delete question
-question.delete('/:token', (c) => {
-    // delete by id
-    const token = c.req.param('token')
-    return c.text(`Question deleted with token: ${token}`)
-})
-question.get('/:token', (c) => {
-    // get info of question by id
-    const token = c.req.param('token')
-    return c.text(`Classroom token: ${token}`)
-})
- 
+question.delete("/:token", (c) => {
+  // delete by id
+  const token = c.req.param("token");
+  return c.text(`Question deleted with token: ${token}`);
+});
+question.get("/:token", (c) => {
+  // get info of question by id
+  const token = c.req.param("token");
+  return c.text(`Classroom token: ${token}`);
+});
 
-
-
-
-Routes_teacher.route('/question', question)
-Routes_teacher.route('/classroom', classroom)
-Routes_teacher.route('/subject', subject)
-
+Routes_teacher.route("/question", question);
+Routes_teacher.route("/classroom", classroom);
+Routes_teacher.route("/subject", subject);
 
 export { Routes_teacher };

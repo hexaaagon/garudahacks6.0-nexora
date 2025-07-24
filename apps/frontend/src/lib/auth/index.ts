@@ -2,11 +2,12 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
 import { drizzle as drizzleDatabase } from "@nexora/database";
+import * as schema from "@nexora/database/drizzle/schema/auth";
 
 export const auth = betterAuth({
-  database: drizzleAdapter(drizzleAdapter, {
+  database: drizzleAdapter(drizzleDatabase.db, {
     provider: "pg",
-    // schema,
+    schema,
   }),
   session: {
     cookieName: "better-auth.session_token",

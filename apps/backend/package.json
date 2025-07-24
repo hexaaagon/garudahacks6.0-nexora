@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "hono": "^4.8.5",
-    "@nexora/database": "workspace:*"
+    "@nexora/database": "*"
   },
   "devDependencies": {
     "@types/bun": "latest"
