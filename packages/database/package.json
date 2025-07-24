@@ -14,6 +14,21 @@
       "types": "./src/drizzle/schema/auth.ts",
       "import": "./src/drizzle/schema/auth.ts",
       "default": "./src/drizzle/schema/auth.ts"
+    },
+    "./drizzle/schema/student": {
+      "types": "./src/drizzle/schema/student.ts",
+      "import": "./src/drizzle/schema/student.ts",
+      "default": "./src/drizzle/schema/student.ts"
+    },
+    "./drizzle/schema/teacher": {
+      "types": "./src/drizzle/schema/teacher.ts",
+      "import": "./src/drizzle/schema/teacher.ts",
+      "default": "./src/drizzle/schema/teacher.ts"
+    },
+    "./drizzle/schema/userDetails": {
+      "types": "./src/drizzle/schema/account.ts",
+      "import": "./src/drizzle/schema/account.ts",
+      "default": "./src/drizzle/schema/account.ts"
     }
   },
   "scripts": {
