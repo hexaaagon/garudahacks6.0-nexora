@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 
-const teacher = new Hono()
+const Routes_teacher = new Hono()
 
 
 const classroom = new Hono()
@@ -95,9 +95,9 @@ question.get('/:token', (c) => {
 
 
 
-teacher.route('/question', question)
-teacher.route('/classroom', classroom)
-teacher.route('/subject', subject)
+Routes_teacher.route('/question', question)
+Routes_teacher.route('/classroom', classroom)
+Routes_teacher.route('/subject', subject)
 
 
-export { teacher };
+export { Routes_teacher };

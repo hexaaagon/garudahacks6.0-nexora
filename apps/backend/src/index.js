@@ -1,11 +1,11 @@
 import { Hono } from 'hono'
-import { teacher } from './routes/teacher.js';
-import { student } from './routes/student.js';
+import { Routes_teacher } from './routes/teacher.js';
+import { Routes_student } from './routes/student.js';
 
 const app = new Hono()
 
-app.route('/teacher', teacher)
-app.route('/students', student)
+app.route('/teacher', Routes_teacher)
+app.route('/students', Routes_student)
 
 app.get('/', (c) => {
   return c.text('Hello Hono!')
