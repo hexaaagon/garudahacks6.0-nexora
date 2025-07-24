@@ -2,72 +2,73 @@ import { Hono } from "hono";
 const Routes_student = new Hono();
 
 import { drizzle } from "@nexora/database";
+import { student } from "@nexora/database/drizzle/schema/student";
+import { userDetails } from "@nexora/database/drizzle/schema/userDetails";
+
 const { db } = drizzle;
+
+  
 
 //make
 Routes_student.post("/", async (c) => {
   const data = await c.req.json();
-  await db.insert(student_scheem).values({
-    name: data.name,
-    grade: data.grade,
-    classroom: data.classroom,
+  await db.insert(userDetails).values({
+    role: data.role,
+    id: data.id
   });
-
   return c.text("student created!");
 });
+
 // get all classrooms
 Routes_student.get("/", async (c) => {
-  const students = await db.select().from(student_scheem);
+  const students = await db.select().from(userDetails);
   return c.json(students);
 });
 
 //class stuff
 Routes_student.delete("/:token", async (c) => {
-  // delete by id
-  const student = c.req.param("token");
-  if (!student) {
+  const token = c.req.param("token");
+  if (!token) {
     return c.text("No student token provided", 400);
   }
-  await db.delete(student).where(student_scheem.token.eq(student));
+  await db.delete(student).where(student.token.eq(token));
   return c.text("student deleted with token: " + token);
 });
+
 Routes_student.get("/:token", async (c) => {
-  // get info of calssrom by id
-  const student = c.req.param("token");
-  if (!student) {
-    return c.text("No student token provided", 400);
-  }
-  await db.select().from(student).where(student_scheem.token.eq(student));
   const token = c.req.param("token");
-  return c.text(`student token: ${token}`);
-});
-Routes_student.put("/:token", async (c) => {
-  // update/edit by id
-  const student = c.req.param("token");
-  if (!student) {
+  if (!token) {
     return c.text("No student token provided", 400);
   }
+  const result = await db.select().from(student).where(student.token.eq(token));
+  return c.json(result);
+});
+
+Routes_student.put("/:token", async (c) => {
+  const token = c.req.param("token");
+  if (!token) {
+    return c.text("No student token provided", 400);
+  }
+  const data = await c.req.json();
   await db
     .update(student)
     .set({
-      name: c.req.json().name,
-      grade: c.req.json().grade,
-      classroom: c.req.json().classroom,
+      name: data.name,
+      grade: data.grade,
+      classroom: data.classroom,
     })
-    .where(student_scheem.token.eq(student));
-  const token = c.req.param("token");
+    .where(student.token.eq(token));
   return c.text(`student updated with token: ${token}`);
 });
+
 Routes_student.post("/:token", async (c) => {
-  // join classroom by token
-  const student = c.req.param("token");
-  if (!student) {
+  const token = c.req.param("token");
+  if (!token) {
     return c.text("No student token provided", 400);
   }
-  await db.insert(student_scheem).values({
-    token: student,
+  await db.insert(student).values({
+    token,
   });
-  const token = c.req.param("token");
   return c.text(`student join classrom with token: ${token}`);
 });
 
