@@ -1,0 +1,16 @@
+{
+  "name": "@nexora/types",
+  "version": "1.0.0",
+  "types": "index.d.ts",
+  "type": "module",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^20.17.6",
+    "discord-api-types": "^0.37.111",
+    "tsc-alias": "^1.8.10",
+    "tsx": "^4.19.2"
+  }
+}
