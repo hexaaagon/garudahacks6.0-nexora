@@ -2,7 +2,7 @@
   "name": "backend",
   "scripts": {
     "preinstall": "npx only-allow bun",
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.js"
   },
   "dependencies": {
     "hono": "^4.8.5"

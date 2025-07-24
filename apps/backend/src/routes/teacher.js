@@ -90,7 +90,6 @@ question.get('/:token', (c) => {
     const token = c.req.param('token')
     return c.text(`Classroom token: ${token}`)
 })
-
  
 
 
