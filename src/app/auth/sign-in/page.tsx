@@ -21,20 +21,15 @@ export default function AuthPage() {
     try {
       console.log("Starting Google sign-in...");
 
-      const result = authClient.signIn.social({
+      const signInPromise = authClient.signIn.social({
         provider: "google",
-        callbackURL: "/", // This will be handled by middleware for redirection
+        callbackURL: "/dashboard",
       });
 
-      toast.promise(result, {
+      toast.promise(signInPromise, {
         loading: "Signing in with Google...",
-        success: "Successfully signed in!",
-        error: (error) => {
-          console.error("Sign-in error:", error);
-          return error instanceof Error
-            ? error.message
-            : "An unexpected error occurred.";
-        },
+        success: "Redirecting...",
+        error: "Failed to sign in. Please try again.",
       });
     } catch (error) {
       console.error("Sign-in error:", error);
