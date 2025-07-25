@@ -113,8 +113,8 @@ export function Navbar({
               ))}
               {showAuth && (
                 <div className="flex items-center space-x-4">
-                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-6 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105">
-                    Get Started - FREE
+                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-6 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105" asChild>
+                    <Link href="/auth/sign-in">Get Started</Link>
                   </Button>
                 </div>
               )}
@@ -189,11 +189,12 @@ export function Navbar({
 
                 {showAuth && (
                   <div className="p-6 border-t border-border space-y-4">
-                    <Link href="/auth/sign-in">
-                      <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3">
-                        Get Started - FREE
-                      </Button>
-                    </Link>
+                    <Button
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3"
+                      asChild
+                    >
+                      <Link href="/auth/sign-in">Get Started - FREE</Link>
+                    </Button>
                   </div>
                 )}
               </div>

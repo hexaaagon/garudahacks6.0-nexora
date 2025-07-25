@@ -4,6 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   ArrowRight,
   BookOpen,
   Brain,
@@ -25,6 +32,7 @@ import Link from "next/link";
 
 export default function LandingPage() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -85,26 +93,65 @@ export default function LandingPage() {
                 <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="group border-2 border-border text-foreground px-10 py-6 text-xl bg-background/80 backdrop-blur-sm hover:bg-accent hover:text-accent-foreground rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-            >
-              <PlayCircle className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform text-primary" />
-              Watch Demo
-            </Button>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="group border-2 border-border text-foreground px-10 py-6 text-xl bg-background/80 backdrop-blur-sm hover:bg-accent hover:text-accent-foreground rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                >
+                  <PlayCircle className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform text-primary" />
+                  Watch Demo
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl w-full p-0 overflow-hidden">
+                <DialogHeader className="p-6 pb-4">
+                  <DialogTitle className="text-2xl font-bold text-center">
+                    Claisse Demo - AI-Powered Teaching Platform
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="px-6 pb-6">
+                  <div
+                    className="relative rounded-xl overflow-hidden shadow-2xl"
+                    style={{ width: "100%", aspectRatio: "16/9" }}
+                  >
+                    <iframe
+                      src="https://www.youtube.com/embed/fpwCsufnc8c"
+                      title="Teachers using Claisse - Free AI platform by Nexora team"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0, width: "100%", height: "100%" }}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
 
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-purple-400/20 rounded-3xl blur-2xl group-hover:blur-xl transition-all duration-500"></div>
-            <Image
-              src="/images/thumbnail.png"
-              alt="Teachers using Claisse - Free AI platform by Nexora team"
-              width={1000}
-              height={600}
-              className="relative rounded-3xl shadow-2xl mx-auto border border-border group-hover:scale-105 transition-all duration-700 hover:shadow-3xl"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent rounded-3xl"></div>
+            <div
+              className="relative rounded-3xl shadow-2xl mx-auto border border-border group-hover:scale-105 transition-all duration-700 hover:shadow-3xl overflow-hidden cursor-pointer"
+              style={{ width: "100%", maxWidth: 1000, aspectRatio: "16/9" }}
+              onClick={() => setIsDialogOpen(true)}
+            >
+              <Image
+                src="/images/thumbnail.png"
+                alt="Claisse Demo Thumbnail - Click to watch"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1000px) 100vw, 1000px"
+              />
+              {/* Play button overlay */}
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors duration-300">
+                <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <PlayCircle className="w-12 h-12 text-primary ml-1" />
+                </div>
+              </div>
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent rounded-3xl pointer-events-none"></div>
           </div>
         </div>
       </section>
@@ -411,15 +458,17 @@ export default function LandingPage() {
 
           {/* Interactive Demo CTA */}
           <div className="text-center mt-16">
-            <Link href="/">
-              <Button
-                size="lg"
-                className="group bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-              >
-                <PlayCircle className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform" />
-                See It In Action
-              </Button>
-            </Link>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  size="lg"
+                  className="group bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                >
+                  <PlayCircle className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform" />
+                  See It In Action
+                </Button>
+              </DialogTrigger>
+            </Dialog>
           </div>
         </div>
       </section>
@@ -677,14 +726,18 @@ export default function LandingPage() {
                 <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Button
-              size="lg"
-              variant="outline"
-              className="group border-2 border-border text-foreground px-10 py-6 text-xl bg-background/80 backdrop-blur-sm hover:bg-accent hover:text-accent-foreground rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-            >
-              <PlayCircle className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform text-primary" />
-              Watch Demo
-            </Button>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="group border-2 border-border text-foreground px-10 py-6 text-xl bg-background/80 backdrop-blur-sm hover:bg-accent hover:text-accent-foreground rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                >
+                  <PlayCircle className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform text-primary" />
+                  Watch Demo
+                </Button>
+              </DialogTrigger>
+            </Dialog>
           </div>
         </div>
 
