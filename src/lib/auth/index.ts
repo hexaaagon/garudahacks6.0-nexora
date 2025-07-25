@@ -13,7 +13,7 @@ export const auth = betterAuth({
   baseURL:
     process.env.BETTER_AUTH_URL ||
     process.env.NEXT_PUBLIC_APP_URL ||
-    "https://classei.hexaa.sh",
+    "https://classe.hexaa.sh",
   socialProviders: {
     google: {
       clientId: process.env.BETTER_AUTH_GOOGLE_CLIENT_ID as string,
@@ -21,7 +21,7 @@ export const auth = betterAuth({
       redirectURI: `${
         process.env.BETTER_AUTH_URL ||
         process.env.NEXT_PUBLIC_APP_URL ||
-        "https://classei.hexaa.sh"
+        "https://classe.hexaa.sh"
       }/api/auth/callback/google`,
     },
   },
