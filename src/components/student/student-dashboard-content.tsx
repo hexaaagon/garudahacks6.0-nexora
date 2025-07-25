@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { StudentHomeworkView } from "@/components/homework/student-homework-view";
+import { JoinClassroom } from "@/components/student/join-classroom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +20,9 @@ import {
   Play,
   Clock,
   CheckCircle,
+  Brain,
+  FileText,
+  Calendar,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -69,10 +73,11 @@ export function StudentDashboardContent({
   });
   const [classrooms, setClassrooms] = useState<Classroom[]>([]);
   const [assignments, setAssignments] = useState<Assignment[]>([]);
+  const [completedHomework, setCompletedHomework] = useState<Assignment[]>([]);
   const [selectedClassroom, setSelectedClassroom] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  const refreshData = async () => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
@@ -102,15 +107,19 @@ export function StudentDashboardContent({
           : [];
         setAssignments(dbAssignments);
 
+        // Filter completed homework for separate display
+        const completed = dbAssignments.filter(
+          (a: Assignment) => a.status === "completed"
+        );
+        setCompletedHomework(completed);
+
         // Update stats
         setStats({
           totalClassrooms: classroomsData.success
             ? classroomsData.classrooms.length
             : 0,
           totalHomework: dbAssignments.length,
-          completedHomework: dbAssignments.filter(
-            (a: Assignment) => a.status === "completed"
-          ).length,
+          completedHomework: completed.length,
           personalityType: classroomsData.success
             ? classroomsData.personalityType
             : undefined,
@@ -122,22 +131,33 @@ export function StudentDashboardContent({
       }
     };
 
-    fetchData();
+    await fetchData();
+  };
+
+  useEffect(() => {
+    refreshData();
   }, []);
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Student Dashboard</h1>
-        <p className="text-gray-600">
-          Welcome back, {user.name || user.email}!
-          {stats.personalityType && (
-            <Badge variant="secondary" className="ml-2">
-              {stats.personalityType}
-            </Badge>
-          )}
-        </p>
-      </div>{" "}
+      <div className="flex justify-between items-start">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Student Dashboard
+          </h1>
+          <p className="text-gray-600">
+            Welcome back, {user.name || user.email}!
+            {stats.personalityType && (
+              <Badge variant="secondary" className="ml-2">
+                {stats.personalityType}
+              </Badge>
+            )}
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <JoinClassroom onClassroomJoined={refreshData} />
+        </div>
+      </div>
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card>
@@ -198,82 +218,197 @@ export function StudentDashboardContent({
             Available Assignments
           </CardTitle>
           <CardDescription>
-            Click &quot;Start Assignment&quot; to begin a quiz immediately
+            &nbsp; &nbsp; Click &quot;Start Assignment&quot; to begin a quiz
+            immediately
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {assignments.length > 0 ? (
-              assignments.map((assignment) => (
-                <Card
-                  key={assignment.id}
-                  className="border-l-4 border-l-blue-500"
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h3 className="font-semibold text-lg">
-                            {assignment.title}
-                          </h3>
-                          <Badge
-                            variant={
-                              assignment.status === "pending"
-                                ? "default"
-                                : assignment.status === "completed"
-                                ? "secondary"
-                                : "destructive"
-                            }
-                          >
-                            <div className="flex items-center gap-1">
-                              {assignment.status === "pending" && (
-                                <Clock className="h-3 w-3" />
-                              )}
-                              {assignment.status === "completed" && (
-                                <CheckCircle className="h-3 w-3" />
-                              )}
-                              {assignment.status.charAt(0).toUpperCase() +
-                                assignment.status.slice(1)}
-                            </div>
-                          </Badge>
+            {assignments.filter((a) => a.status === "pending").length > 0 ? (
+              assignments
+                .filter((a) => a.status === "pending")
+                .map((assignment) => (
+                  <Card
+                    key={assignment.id}
+                    className="border-l-4 border-l-blue-500"
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <h3 className="font-semibold text-lg">
+                              {assignment.title}
+                            </h3>
+                            <Badge
+                              variant={
+                                assignment.status === "pending"
+                                  ? "default"
+                                  : assignment.status === "completed"
+                                  ? "secondary"
+                                  : "destructive"
+                              }
+                            >
+                              <div className="flex items-center gap-1">
+                                {assignment.status === "pending" && (
+                                  <Clock className="h-3 w-3" />
+                                )}
+                                {assignment.status === "completed" && (
+                                  <CheckCircle className="h-3 w-3" />
+                                )}
+                                {assignment.status.charAt(0).toUpperCase() +
+                                  assignment.status.slice(1)}
+                              </div>
+                            </Badge>
+                          </div>
+                          <p className="text-gray-600 mb-2 ml-4">
+                            {assignment.description}
+                          </p>
+                          <div className="flex items-center gap-4 text-sm text-gray-500 ml-4">
+                            <span className="flex items-center gap-1">
+                              <BookOpen className="h-4 w-4" />
+                              {assignment.subject}
+                            </span>
+                            <span>
+                              ❓ {assignment.questionsCount} questions
+                            </span>
+                            <span>
+                              📅 Due:{" "}
+                              {assignment.dueDate
+                                ? new Date(
+                                    assignment.dueDate
+                                  ).toLocaleDateString()
+                                : "No due date"}
+                            </span>
+                          </div>
                         </div>
-                        <p className="text-gray-600 mb-2">
-                          {assignment.description}
-                        </p>
-                        <div className="flex items-center gap-4 text-sm text-gray-500">
-                          <span className="flex items-center gap-1">
-                            <BookOpen className="h-4 w-4" />
-                            {assignment.subject}
-                          </span>
-                          <span>❓ {assignment.questionsCount} questions</span>
-                          <span>
-                            📅 Due:{" "}
-                            {assignment.dueDate
-                              ? new Date(
-                                  assignment.dueDate
-                                ).toLocaleDateString()
-                              : "No due date"}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="ml-4">
-                        {assignment.status === "pending" ? (
+                        <div className="ml-4">
                           <Link href={`/${assignment.subject.toLowerCase()}/1`}>
                             <Button className="flex items-center gap-2">
                               <Play className="h-4 w-4" />
                               Start Assignment
                             </Button>
                           </Link>
-                        ) : assignment.status === "completed" ? (
-                          <Button variant="outline" disabled>
-                            <CheckCircle className="h-4 w-4 mr-2" />
-                            Completed
-                          </Button>
-                        ) : (
-                          <Button variant="destructive" disabled>
-                            Overdue
-                          </Button>
-                        )}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+            ) : (
+              <Card className="text-center py-8">
+                <CardContent>
+                  <ClipboardList className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    No Pending Assignments
+                  </h3>
+                  <p className="text-gray-600">
+                    &nbsp; &nbsp; Great job! You&apos;ve completed all available
+                    assignments. Check back later for new ones!
+                  </p>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Completed Homework Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Trophy className="h-5 w-5 text-green-600" />
+            Completed Homework
+          </CardTitle>
+          <CardDescription>
+            &nbsp; &nbsp; View your completed assignments powered by Puter AI
+            personalization
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="flex items-start gap-3">
+              <Brain className="h-5 w-5 text-blue-600 mt-0.5" />
+              <div>
+                <h4 className="font-semibold text-blue-900 mb-1">
+                  AI-Powered Personalization
+                </h4>
+                <p className="text-sm text-blue-700 leading-relaxed">
+                  &nbsp; &nbsp; All homework is generated by Puter AI based on
+                  your learning data and submission patterns. Each assignment
+                  typically contains:
+                </p>
+                <ul className="text-sm text-blue-700 mt-2 ml-4 space-y-1">
+                  <li>
+                    &nbsp; &nbsp; • 10 multiple choice questions tailored to
+                    your level
+                  </li>
+                  <li>
+                    &nbsp; &nbsp; • 3 essay questions for deeper understanding
+                  </li>
+                  <li>
+                    &nbsp; &nbsp; • Personalized difficulty based on your
+                    progress
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            {completedHomework.length > 0 ? (
+              completedHomework.map((homework) => (
+                <Card
+                  key={homework.id}
+                  className="border-l-4 border-l-green-500"
+                >
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="font-semibold text-lg">
+                            {homework.title}
+                          </h3>
+                          <Badge variant="secondary">
+                            <div className="flex items-center gap-1">
+                              <CheckCircle className="h-3 w-3" />
+                              Completed
+                            </div>
+                          </Badge>
+                          {homework.difficulty && (
+                            <Badge variant="outline">
+                              {homework.difficulty}
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-gray-600 mb-2 ml-4">
+                          {homework.description}
+                        </p>
+                        <div className="flex items-center gap-4 text-sm text-gray-500 ml-4">
+                          <span className="flex items-center gap-1">
+                            <BookOpen className="h-4 w-4" />
+                            {homework.subject}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <FileText className="h-4 w-4" />
+                            {homework.questionsCount} questions
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Calendar className="h-4 w-4" />
+                            Completed:{" "}
+                            {homework.dueDate
+                              ? new Date(homework.dueDate).toLocaleDateString()
+                              : "Recently"}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Brain className="h-4 w-4" />
+                            AI-Generated
+                          </span>
+                        </div>
+                      </div>
+                      <div className="ml-4">
+                        <Button variant="outline" size="sm">
+                          <FileText className="h-4 w-4 mr-2" />
+                          View Results
+                        </Button>
                       </div>
                     </div>
                   </CardContent>
@@ -282,13 +417,14 @@ export function StudentDashboardContent({
             ) : (
               <Card className="text-center py-8">
                 <CardContent>
-                  <ClipboardList className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <Trophy className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    No Assignments Yet
+                    No Completed Homework Yet
                   </h3>
                   <p className="text-gray-600">
-                    Your teacher hasn&apos;t created any assignments yet. Check
-                    back later!
+                    &nbsp; &nbsp; Complete your first assignment to see it here.
+                    Your progress will be tracked and used to personalize future
+                    homework!
                   </p>
                 </CardContent>
               </Card>
@@ -302,7 +438,8 @@ export function StudentDashboardContent({
           <CardHeader>
             <CardTitle>Select Classroom</CardTitle>
             <CardDescription>
-              Choose a classroom to view and complete homework assignments.
+              &nbsp; &nbsp; Choose a classroom to view and complete homework
+              assignments.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -321,10 +458,10 @@ export function StudentDashboardContent({
                     <h4 className="font-semibold text-gray-900">
                       {classroom.name}
                     </h4>
-                    <p className="text-sm text-gray-600 mt-1">
+                    <p className="text-sm text-gray-600 mt-1 ml-4">
                       {classroom.subjects.join(", ")}
                     </p>
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-gray-500 mt-2 ml-4">
                       Code: {classroom.shareCode}
                     </p>
                   </CardContent>
@@ -345,8 +482,8 @@ export function StudentDashboardContent({
               No Classrooms Yet
             </h3>
             <p className="text-gray-600 mb-4">
-              You haven&apos;t joined any classrooms yet. Ask your teacher for a
-              classroom code to get started.
+              &nbsp; &nbsp; You haven&apos;t joined any classrooms yet. Ask your
+              teacher for a classroom code to get started.
             </p>
           </CardContent>
         </Card>

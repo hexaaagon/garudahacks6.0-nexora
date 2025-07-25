@@ -184,6 +184,10 @@ export function SetupForm({ user }: SetupFormProps) {
           body: JSON.stringify(classroomData),
         });
 
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const result = await response.json();
 
         if (result.success) {
@@ -196,12 +200,11 @@ export function SetupForm({ user }: SetupFormProps) {
       } else {
         // If skipping classroom creation, redirect to teacher dashboard
         router.push("/teacher");
-        router.refresh();
         return;
       }
     } catch (err) {
       console.error("Classroom setup error:", err);
-      setError("Failed to create classroom");
+      setError("Failed to create classroom. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -533,6 +536,7 @@ export function SetupForm({ user }: SetupFormProps) {
 
             <div className="flex gap-3">
               <Button
+                type="button"
                 onClick={() => handleTeacherClassroomSetup(false)}
                 disabled={isLoading}
                 className="flex-1"
@@ -540,6 +544,7 @@ export function SetupForm({ user }: SetupFormProps) {
                 {isLoading ? "Creating..." : "Create Classroom"}
               </Button>
               <Button
+                type="button"
                 onClick={() => handleTeacherClassroomSetup(true)}
                 variant="outline"
                 disabled={isLoading}
@@ -562,7 +567,6 @@ export function SetupForm({ user }: SetupFormProps) {
                   <Button
                     onClick={() => {
                       router.push("/teacher");
-                      router.refresh();
                     }}
                     className="w-full"
                   >
