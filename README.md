@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+[![test](/public/images/thumbnail.png)](https://claise.hexaa.sh/)
+# Claisse - Educational Platform for improving studying technique
 
-## Getting Started
+Claisse is an educational platform that utalize AI for making automated quiz based on the student perference of study and their study interest. 
+Built with Next.js for frontend and backend, Supabase and Hono for database. 
 
-First, run the development server:
 
+## Features
+- User Authentication (Teachers and Students)
+- Classroom Management
+- Assignment/quiz System
+- Student Progress Tracking
+- Personalized Learning Experience
+
+## Language, Framework, tools, and external script used in this project.
+
+- **Frontend**:
+  - Next.js 15.4
+  - React 19.1
+  - TypeScript
+  - Tailwind CSS
+  - shadcn/ui components
+  - Sonner for notifications
+
+- **Backend**:
+  - Hono.js for API routes
+  - Supabase for database and authentication
+  - TypeScript
+
+- **Packages**:
+  - `@nexora/database`: Database client and schema definitions
+  - `@nexora/types`: TypeScript type definitions
+  - `@nexora/ai`: AI-related functionalities
+
+
+## Setup
+
+1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/hexaaagon/claiss
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
+```bash
+bun install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables
+```bash
+cp .env.example .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Required environment variables:
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
 
-## Learn More
+4. Start the development server
+```bash
+bun run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+## API Routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Teacher Routes
+- `POST /teacher/classroom` - Create a new classroom
+- `GET /teacher/classroom` - Get all classrooms
+- `GET /teacher/classroom/:token` - Get classroom by token
+- `PUT /teacher/classroom/:token` - Update classroom
+- `DELETE /teacher/classroom/:token` - Delete classroom
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Student Routes
+- `POST /student` - Create a new student
+- `GET /student` - Get all students
+- `GET /student/:token` - Get student by token
+- `PUT /student/:token` - Update student
+- `DELETE /student/:token` - Delete student
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+MIT License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 👥 Contributors
+
+- [@hexaaagon](https://github.com/hexaaagon)
+- [@your-name](https://github.com/your-name)
