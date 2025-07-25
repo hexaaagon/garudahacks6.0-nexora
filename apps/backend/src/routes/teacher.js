@@ -17,12 +17,26 @@ classroom.post("/", async (c) => {
     })
     .select()
     .single();
+  const { data: newClassroom, error } = await supabaseService
+    .from("classrooms")
+    .insert({
+      name: data.name,
+      grade: data.grade,
+      classroom: data.classroom,
+    })
+    .select()
+    .single();
 
   if (error) {
     return c.json({ error: error.message }, 400);
   }
   return c.json(newClassroom);
+  if (error) {
+    return c.json({ error: error.message }, 400);
+  }
+  return c.json(newClassroom);
 });
+
 
 // get all classrooms
 classroom.get("/", async (c) => {
@@ -34,9 +48,18 @@ classroom.get("/", async (c) => {
     return c.json({ error: error.message }, 400);
   }
   return c.json(classrooms);
+  const { data: classrooms, error } = await supabaseService
+    .from("classrooms")
+    .select("*");
+
+  if (error) {
+    return c.json({ error: error.message }, 400);
+  }
+  return c.json(classrooms);
 });
 
 //class stuff
+classroom.delete("/:token", async (c) => {
 classroom.delete("/:token", async (c) => {
   const token = c.req.param("token");
   if (!token) {
@@ -55,6 +78,8 @@ classroom.delete("/:token", async (c) => {
 });
 
 classroom.get("/:token", async (c) => {
+
+classroom.get("/:token", async (c) => {
   const token = c.req.param("token");
   if (!token) {
     return c.json({ error: "No classroom token provided" }, 400);
@@ -71,6 +96,8 @@ classroom.get("/:token", async (c) => {
   }
   return c.json(classroom);
 });
+
+classroom.put("/:token", async (c) => {
 
 classroom.put("/:token", async (c) => {
   const token = c.req.param("token");
@@ -123,6 +150,8 @@ subject.get("/", async (c) => {
 
 //subject operations
 subject.delete("/:token", async (c) => {
+//subject operations
+subject.delete("/:token", async (c) => {
   const token = c.req.param("token");
   if (!token) {
     return c.json({ error: "No subject token provided" }, 400);
@@ -138,6 +167,8 @@ subject.delete("/:token", async (c) => {
   }
   return c.json({ message: "Subject deleted successfully" });
 });
+
+subject.get("/:token", async (c) => {
 
 subject.get("/:token", async (c) => {
   const token = c.req.param("token");
@@ -156,6 +187,8 @@ subject.get("/:token", async (c) => {
   }
   return c.json(subject);
 });
+
+subject.put("/:token", async (c) => {
 
 subject.put("/:token", async (c) => {
   const token = c.req.param("token");
@@ -192,6 +225,18 @@ question.post("/", async (c) => {
     return c.json({ error: error.message }, 400);
   }
   return c.json(newQuestion);
+question.post("/", async (c) => {
+  const data = await c.req.json();
+  const { data: newQuestion, error } = await supabaseService
+    .from("questions")
+    .insert(data)
+    .select()
+    .single();
+
+  if (error) {
+    return c.json({ error: error.message }, 400);
+  }
+  return c.json(newQuestion);
 });
 
 //get all questions
@@ -204,8 +249,19 @@ question.get("/", async (c) => {
     return c.json({ error: error.message }, 400);
   }
   return c.json(questions);
+//get all questions
+question.get("/", async (c) => {
+  const { data: questions, error } = await supabaseService
+    .from("questions")
+    .select("*");
+
+  if (error) {
+    return c.json({ error: error.message }, 400);
+  }
+  return c.json(questions);
 });
 
+question.put("/:token", async (c) => {
 question.put("/:token", async (c) => {
   const token = c.req.param("token");
   const data = await c.req.json();
@@ -227,7 +283,9 @@ question.put("/:token", async (c) => {
   return c.json(updatedQuestion);
 });
 
+
 // delete question
+question.delete("/:token", async (c) => {
 question.delete("/:token", async (c) => {
   const token = c.req.param("token");
   if (!token) {
@@ -244,6 +302,8 @@ question.delete("/:token", async (c) => {
   }
   return c.json({ message: "Question deleted successfully" });
 });
+
+question.get("/:token", async (c) => {
 
 question.get("/:token", async (c) => {
   const token = c.req.param("token");
