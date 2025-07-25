@@ -28,7 +28,6 @@ export default function DashboardLayout({
   const studentLinks = [
     { name: "Dashboard", href: "/student", icon: "🏠" },
     { name: "Assignments", href: "/student/assignments", icon: "📝" },
-    { name: "Grades", href: "/student/grades", icon: "📊" },
     { name: "Profile", href: "/student/profile", icon: "👤" },
   ];
 
