@@ -79,8 +79,3 @@ bun run dev
 ## License
 
 MIT License
-
-## 👥 Contributors
-
-- [@hexaaagon](https://github.com/hexaaagon)
-- [@your-name](https://github.com/your-name)
