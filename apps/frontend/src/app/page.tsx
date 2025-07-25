@@ -1,140 +1,305 @@
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Menu,
+  Zap,
+  Shield,
+  Users,
+  BarChart3,
+  ArrowRight,
+  Twitter,
+  Linkedin,
+  Github,
+  Mail,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
-export default function HomePage() {
-  // Auth logic is now handled in middleware
-  // This page only shows for unauthenticated users
-
-  // Show home page for unauthenticated users
+export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-green-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <h1 className="text-xl font-bold text-gray-900">Nexora</h1>
-              </div>
+      <header className="sticky top-0 z-50 w-full border-b bg-green-50/95 backdrop-blur supports-[backdrop-filter]:bg-green-50/60">
+        <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+          <div className="flex items-center space-x-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-600">
+              <Zap className="h-5 w-5 text-white" />
             </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/auth/sign-in">
-                <Button variant="outline">Sign In</Button>
-              </Link>
-            </div>
+            <span className="text-xl font-bold">Claiss</span>
+          </div>
+
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link
+              href="#home"
+              className="text-sm font-medium hover:text-green-600 transition-colors"
+            >
+              Home
+            </Link>
+
+            <Link
+              href="#features"
+              className="text-sm font-medium hover:text-green-600 transition-colors"
+            >
+              Features
+            </Link>
+
+            <Link
+              href="#contact"
+              className="text-sm font-medium hover:text-green-600 transition-colors"
+            >
+              Contact
+            </Link>
+          </nav>
+
+          <div className="flex items-center space-x-4">
+            <Button variant="ghost" className="hidden md:inline-flex">
+              Sign In
+            </Button>
+            <Button>Get Started</Button>
+            <Button variant="ghost" size="icon" className="md:hidden">
+              <Menu className="h-5 w-5" />
+            </Button>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-            Welcome to <span className="text-indigo-600">Nexora</span>
-          </h1>
-          <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-            Your comprehensive educational platform connecting students and
-            teachers in a seamless learning environment.
-          </p>
+      {/* Hero Section */}
+      <section
+        id="home"
+        className="py-20 md:py-32 bg-gradient-to-br from-green-100 to-emerald-200"
+      >
+        <div className="container px-4 md:px-6">
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <Badge variant="secondary" className="w-fit">
+                  🤖 AI-Powered Learning Platform
+                </Badge>
+                <h1 className="text-4xl font-bold tracking-tight  sm:text-5xl md:text-6xl lg:text-7xl">
+                  Smart Learning with{" "}
+                  <span className="text-green-600">Claiss</span>
+                </h1>
+                <p className="text-xl text-muted-foreground max-w-[600px]">
+                  AI-powered quiz platform that creates unique questions for
+                  every student to prevent cheating. Empower teachers with smart
+                  tools and give children engaging, personalized learning
+                  experiences.
+                </p>
+              </div>
 
-          <div className="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
-            <div className="space-y-4 sm:space-y-0 sm:space-x-4 sm:inline-flex">
-              <Link href="/auth/sign-in">
-                <Button size="lg" className="w-full sm:w-auto">
-                  Get Started
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button
+                  size="lg"
+                  className="text-lg px-8 bg-green-600 hover:bg-green-700"
+                >
+                  Start Free
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </Link>
-              <Link href="/">
                 <Button
                   variant="outline"
                   size="lg"
-                  className="w-full sm:w-auto"
+                  className="text-lg px-8 bg-transparent"
                 >
-                  Learn More
+                  Watch Demo
                 </Button>
-              </Link>
+              </div>
+            </div>
+
+            <div className="relative">
+              <Image
+                src="/placeholder.svg?height=600&width=800"
+                alt="StreamLine Dashboard"
+                width={800}
+                height={600}
+                className="rounded-xl shadow-2xl"
+              />
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Features Section */}
-        <div className="mt-24">
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="bg-white rounded-lg shadow-md p-6 text-center">
-              <div className="text-4xl mb-4">🎓</div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                For Students
-              </h3>
-              <p className="text-gray-600">
-                Access your courses, submit assignments, track grades, and
-                communicate with teachers.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-md p-6 text-center">
-              <div className="text-4xl mb-4">👨‍🏫</div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                For Teachers
-              </h3>
-              <p className="text-gray-600">
-                Create assignments, manage classes, grade students, and monitor
-                progress.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-md p-6 text-center">
-              <div className="text-4xl mb-4">🔒</div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Secure Access
-              </h3>
-              <p className="text-gray-600">
-                Role-based authentication ensures users only access their
-                designated portals.
-              </p>
-            </div>
+      {/* Features Section */}
+      <section id="features" className="py-20 md:py-32">
+        <div className="container px-4 md:px-6">
+          <div className="text-center space-y-4 mb-16">
+            <Badge variant="secondary" className="w-fit mx-auto">
+              Features
+            </Badge>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+              Everything educators need to succeed
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-[800px] mx-auto">
+              Powerful AI-driven tools designed to enhance learning, prevent
+              cheating, and empower teachers with smart educational technology.
+            </p>
           </div>
-        </div>
 
-        {/* Auto-redirect Notice */}
-        <div className="mt-16 bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <svg
-                className="h-5 w-5 text-blue-400"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-            <div className="ml-3">
-              <h3 className="text-sm font-medium text-blue-800">
-                Already signed in?
-              </h3>
-              <div className="mt-2 text-sm text-blue-700">
-                <p>
-                  If you&apos;re already authenticated, you&apos;ll be
-                  automatically redirected to your portal:
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-green-100">
+                  <Zap className="h-6 w-6 text-green-600" />
+                </div>
+                <CardTitle>AI Quiz Generation</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Our AI creates unique questions and answers for each student,
+                  ensuring fair assessment and preventing cheating.
                 </p>
-                <ul className="list-disc list-inside mt-1">
-                  <li>Students will be redirected to the Student Portal</li>
-                  <li>Teachers will be redirected to the Teacher Portal</li>
-                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-100">
+                  <Users className="h-6 w-6 text-emerald-600" />
+                </div>
+                <CardTitle>Teacher Dashboard</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Comprehensive tools for teachers to create custom quizzes,
+                  track student progress, and manage classrooms.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100">
+                  <BarChart3 className="h-6 w-6 text-purple-600" />
+                </div>
+                <CardTitle>Smart Analytics</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Detailed insights into student performance, learning patterns,
+                  and areas that need improvement.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-100">
+                  <Shield className="h-6 w-6 text-orange-600" />
+                </div>
+                <CardTitle>Anti-Cheating System</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Advanced algorithms ensure academic integrity with randomized
+                  questions and secure testing environment.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-20 md:py-32 bg-green-600 text-white">
+        <div className="container px-4 md:px-6 text-center">
+          <div className="space-y-8 max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+              Ready to transform learning?
+            </h2>
+            <p className="text-xl text-green-100">
+              Join thousands of teachers who are already using Claiss for free
+              to create engaging, cheat-proof quizzes that help students learn
+              better.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                size="lg"
+                variant="secondary"
+                className="text-lg px-8 bg-green-600 hover:bg-green-700"
+              >
+                Get Started Free
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </div>
+            <p className="text-sm text-green-200">
+              100% Free • No credit card required • Start teaching today
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer id="contact" className="bg-gray-900 text-white py-16">
+        <div className="container px-4 md:px-6">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 mx-auto text-center">
+            <div>
+              <div className="flex items-center space-x-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-600">
+                  <Zap className="h-5 w-5 text-white" />
+                </div>
+                <span className="text-xl font-bold">Claiss</span>
+              </div>
+              <p className="text-gray-400">
+                Claiss is an AI-powered learning platform that helps teachers
+                create engaging quizzes and prevents cheating through
+                intelligent question generation.
+              </p>
+              <div className="flex space-x-4">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="text-gray-400 hover:text-white"
+                >
+                  <Twitter className="h-5 w-5" />
+                </Button>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="text-gray-400 hover:text-white"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </Button>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="text-gray-400 hover:text-white"
+                >
+                  <Github className="h-5 w-5" />
+                </Button>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="text-gray-400 hover:text-white"
+                >
+                  <Mail className="h-5 w-5" />
+                </Button>
               </div>
             </div>
           </div>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-white border-t">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center text-gray-500 text-sm">
-            <p>&copy; 2025 Nexora Educational Platform. All rights reserved.</p>
+          <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-gray-400 text-sm">
+              © {new Date().getFullYear()} StreamLine. All rights reserved.
+            </p>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <Link
+                href="#"
+                className="text-gray-400 hover:text-white text-sm transition-colors"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="#"
+                className="text-gray-400 hover:text-white text-sm transition-colors"
+              >
+                Terms of Service
+              </Link>
+              <Link
+                href="#"
+                className="text-gray-400 hover:text-white text-sm transition-colors"
+              >
+                Cookie Policy
+              </Link>
+            </div>
           </div>
         </div>
       </footer>
