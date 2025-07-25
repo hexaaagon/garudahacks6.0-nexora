@@ -1,7 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Bell, Search, Brain, Menu, X } from "lucide-react";
+import { Bell, Search, Menu, X } from "lucide-react";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 export interface NavbarAction {
   label: string;
   onClick: () => void;
@@ -84,7 +86,13 @@ export function Navbar({
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg">
-                <Brain className="w-6 h-6 text-primary-foreground" />
+                <Image
+                  src="/images/claisse.svg"
+                  className="w-6 h-6 text-primary-foreground"
+                  alt={brandName}
+                  width={24}
+                  height={24}
+                />
               </div>
               <span className="text-2xl font-bold text-foreground">
                 {brandName}
@@ -141,7 +149,13 @@ export function Navbar({
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                        <Brain className="w-5 h-5 text-primary-foreground" />
+                        <Image
+                          src="/images/claisse.svg"
+                          className="w-5 h-5 text-primary-foreground"
+                          alt={brandName}
+                          width={24}
+                          height={24}
+                        />
                       </div>
                       <span className="text-xl font-bold text-card-foreground">
                         {brandName}
