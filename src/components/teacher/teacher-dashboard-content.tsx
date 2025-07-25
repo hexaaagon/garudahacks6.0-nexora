@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -49,6 +50,7 @@ interface ClassroomStats {
 export function TeacherDashboardContent({
   user,
 }: TeacherDashboardContentProps) {
+  const router = useRouter();
   const [stats, setStats] = useState<ClassroomStats>({
     totalClasses: 0,
     totalHomework: 0,
@@ -180,7 +182,7 @@ export function TeacherDashboardContent({
             <Button
               variant="outline"
               className="h-20 flex-col space-y-2"
-              onClick={() => (window.location.href = "/setup")}
+              onClick={() => router.push("/setup")}
             >
               <Plus className="h-5 w-5" />
               <span>Create New Class</span>

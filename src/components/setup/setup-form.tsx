@@ -192,7 +192,10 @@ export function SetupForm({ user }: SetupFormProps) {
 
         if (result.success) {
           setShareCode(result.shareCode);
-          // Don't redirect immediately, stay on the same step to show share code
+          // Auto-redirect to teacher dashboard after showing success message briefly
+          setTimeout(() => {
+            router.push("/teacher");
+          }, 2000);
         } else {
           setError(result.error || "Failed to create classroom");
           return;
@@ -557,11 +560,16 @@ export function SetupForm({ user }: SetupFormProps) {
             {shareCode && (
               <div className="bg-green-50 border border-green-200 rounded-md p-4">
                 <h4 className="font-medium text-green-800">
-                  Classroom Created!
+                  Classroom Created Successfully! 🎉
                 </h4>
                 <p className="text-sm text-green-600 mt-1">
                   Share this code with your students:{" "}
-                  <strong>{shareCode}</strong>
+                  <strong className="bg-green-100 px-2 py-1 rounded">
+                    {shareCode}
+                  </strong>
+                </p>
+                <p className="text-xs text-green-600 mt-2">
+                  Redirecting to your dashboard in 2 seconds...
                 </p>
                 <div className="mt-3">
                   <Button
@@ -570,7 +578,7 @@ export function SetupForm({ user }: SetupFormProps) {
                     }}
                     className="w-full"
                   >
-                    Continue to Dashboard
+                    Continue to Dashboard Now
                   </Button>
                 </div>
               </div>

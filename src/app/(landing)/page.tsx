@@ -98,7 +98,7 @@ export default function LandingPage() {
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-purple-400/20 rounded-3xl blur-2xl group-hover:blur-xl transition-all duration-500"></div>
             <Image
-              src="https://picsum.photos/1920/1080"
+              src="/images/thumbnail.png"
               alt="Teachers using Claisse - Free AI platform by Nexora team"
               width={1000}
               height={600}
