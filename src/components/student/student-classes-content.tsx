@@ -193,7 +193,7 @@ export function StudentClassesContent({ user }: StudentClassesContentProps) {
                     size="sm"
                     className="flex-1"
                     onClick={() =>
-                      (window.location.href = `/dashboard/student/assignments?class=${classroom.id}`)
+                      (window.location.href = `/student/assignments?class=${classroom.id}`)
                     }
                   >
                     <BookOpen className="h-4 w-4 mr-1" />

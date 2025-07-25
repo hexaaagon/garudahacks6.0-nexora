@@ -26,16 +26,14 @@ export default function DashboardLayout({
   const { user, signOut } = useAuth();
 
   const studentLinks = [
-    { name: "Dashboard", href: "/dashboard/student", icon: "🏠" },
-    { name: "My Classes", href: "/dashboard/student/classes", icon: "📚" },
-    { name: "Assignments", href: "/dashboard/student/assignments", icon: "📝" },
-    { name: "Grades", href: "/dashboard/student/grades", icon: "📊" },
-    { name: "Profile", href: "/dashboard/student/profile", icon: "👤" },
+    { name: "Dashboard", href: "/student", icon: "🏠" },
+    { name: "Assignments", href: "/student/assignments", icon: "📝" },
+    { name: "Grades", href: "/student/grades", icon: "📊" },
+    { name: "Profile", href: "/student/profile", icon: "👤" },
   ];
 
   const teacherLinks = [
     { name: "Dashboard", href: "/teacher", icon: "🏠" },
-    { name: "My Classes", href: "/teacher/classes", icon: "🏫" },
     { name: "All Homework", href: "/teacher/homework", icon: "📋" },
     { name: "Students", href: "/teacher/students", icon: "👥" },
     { name: "Profile", href: "/teacher/profile", icon: "👤" },

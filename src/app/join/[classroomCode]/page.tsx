@@ -17,5 +17,5 @@ export default async function JoinClassroomPage({ params }: JoinPageProps) {
 
   // If authenticated, redirect to student dashboard with the classroom code as a parameter
   // The dashboard can then show a join dialog with the code pre-filled
-  return redirect(`/dashboard/student?join=${params.classroomCode}`);
+  return redirect(`/student?join=${params.classroomCode}`);
 }

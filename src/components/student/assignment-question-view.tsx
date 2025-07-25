@@ -166,7 +166,7 @@ export function AssignmentQuestionView({
 
       if (data.success) {
         // Redirect to results page or assignments list
-        window.location.href = "/dashboard/student/assignments";
+        window.location.href = "/student/assignments";
       } else {
         setError(data.error || "Failed to submit assignment");
       }
@@ -215,7 +215,7 @@ export function AssignmentQuestionView({
                 ? "The assignment you're looking for doesn't exist or has been removed."
                 : "There was an error loading the assignment. Please try again."}
             </p>
-            <Link href="/dashboard/student/assignments">
+            <Link href="/student/assignments">
               <Button>
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Assignments
@@ -280,7 +280,7 @@ export function AssignmentQuestionView({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <Link href="/dashboard/student/assignments">
+          <Link href="/student/assignments">
             <Button variant="ghost" size="sm" className="mb-2">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Assignments

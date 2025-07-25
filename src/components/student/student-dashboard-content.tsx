@@ -59,40 +59,6 @@ interface StudentDashboardContentProps {
   user: AuthUser;
 }
 
-// Placeholder assignments data - TODO: Replace with database fetch
-const placeholderAssignments: Assignment[] = [
-  {
-    id: "math-quiz-1",
-    title: "Mathematics Quiz #1",
-    subject: "Mathematics",
-    description: "Basic arithmetic and algebra questions",
-    dueDate: "2025-07-30",
-    status: "pending",
-    questionsCount: 10,
-    classroomId: "classroom-1",
-  },
-  {
-    id: "science-quiz-1",
-    title: "Science Quiz #1",
-    subject: "Science",
-    description: "General science knowledge",
-    dueDate: "2025-08-01",
-    status: "pending",
-    questionsCount: 10,
-    classroomId: "classroom-1",
-  },
-  {
-    id: "history-quiz-1",
-    title: "History Quiz #1",
-    subject: "History",
-    description: "World War II and modern history",
-    dueDate: "2025-08-05",
-    status: "completed",
-    questionsCount: 10,
-    classroomId: "classroom-2",
-  },
-];
-
 export function StudentDashboardContent({
   user,
 }: StudentDashboardContentProps) {
@@ -151,15 +117,6 @@ export function StudentDashboardContent({
         });
       } catch (error) {
         console.error("Error fetching student data:", error);
-        // On error, show placeholder assignments as fallback
-        setAssignments(placeholderAssignments);
-        setStats({
-          totalClassrooms: 0,
-          totalHomework: placeholderAssignments.length,
-          completedHomework: placeholderAssignments.filter(
-            (a) => a.status === "completed"
-          ).length,
-        });
       } finally {
         setIsLoading(false);
       }

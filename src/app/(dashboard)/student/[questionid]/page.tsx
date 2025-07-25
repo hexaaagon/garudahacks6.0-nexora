@@ -134,7 +134,7 @@ export default function QuizPage({
     } else {
       // Finished all questions, could redirect to results or back to dashboard
       alert("Assignment completed! Great job!");
-      router.push("/dashboard/student");
+      router.push("/student");
     }
   };
 
@@ -147,7 +147,7 @@ export default function QuizPage({
   const handleFinish = () => {
     // TODO: Save results to database
     alert(`${subjectname} assignment completed! Great job!`);
-    router.push("/dashboard/student");
+    router.push("/student");
   };
 
   return (

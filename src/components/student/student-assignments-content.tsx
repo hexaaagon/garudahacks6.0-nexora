@@ -410,9 +410,7 @@ export function StudentAssignmentsContent({
                         View Results
                       </Button>
                     ) : (
-                      <Link
-                        href={`/dashboard/student/assignments/${assignment.id}`}
-                      >
+                      <Link href={`/student/assignments/${assignment.id}`}>
                         <Button className="flex items-center gap-2">
                           <Play className="h-4 w-4" />
                           Start Assignment
