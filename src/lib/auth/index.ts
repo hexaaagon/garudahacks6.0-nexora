@@ -10,10 +10,6 @@ export const auth = betterAuth({
     provider: "pg",
     schema,
   }),
-  baseURL:
-    process.env.BETTER_AUTH_URL ||
-    process.env.NEXT_PUBLIC_APP_URL ||
-    "https://classe.hexaa.sh",
   socialProviders: {
     google: {
       clientId: process.env.BETTER_AUTH_GOOGLE_CLIENT_ID as string,
