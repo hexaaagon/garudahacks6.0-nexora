@@ -8,7 +8,7 @@ import { eq, and } from "drizzle-orm";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { classroomId: string } }
+  { params }: { params: Promise<{ classroomId: string }> }
 ) {
   try {
     const session = await auth.api.getSession({
@@ -19,7 +19,7 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { classroomId } = params;
+    const { classroomId } = await params;
 
     // Check if user has permission to view this classroom's homework
     const classroomRecord = await db
