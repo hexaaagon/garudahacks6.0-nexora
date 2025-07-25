@@ -29,7 +29,7 @@ const runMigrate = async () => {
   // Database Migration
   console.log("⏳ Running Database migrations...");
   await migrate(db, {
-    migrationsFolder: "src/drizzle/migrations",
+    migrationsFolder: "src/lib/database/drizzle/migrations",
   });
 
   // // Supabase Extensions check
@@ -147,9 +147,9 @@ const templateReplacements: Array<
   ["HOOK_TYPE", (type: "before" | "after") => type],
 ];
 async function RunSQLHooks(type: "before" | "after", db: PostgresJsDatabase) {
-  const files = (await glob(`src/drizzle/sql/hooks/${type}/*.sql`)).map(
-    (filePath) => path.resolve(filePath)
-  );
+  const files = (
+    await glob(`src/lib/database/drizzle/sql/hooks/${type}/*.sql`)
+  ).map((filePath) => path.resolve(filePath));
 
   const file: boolean[] = await Promise.all(
     files.map(async (file) => {

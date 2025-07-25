@@ -17,23 +17,24 @@ export default function DashboardLayout({
   const { signOut } = useAuth();
 
   const studentLinks = [
-    { name: "Dashboard", href: "/student", icon: "🏠" },
-    { name: "My Courses", href: "/student/courses", icon: "📚" },
-    { name: "Assignments", href: "/student/assignments", icon: "📝" },
-    { name: "Grades", href: "/student/grades", icon: "📊" },
-    { name: "Profile", href: "/student/profile", icon: "👤" },
+    { name: "Dashboard", href: "/dashboard/student", icon: "🏠" },
+    { name: "My Classes", href: "/dashboard/student/classes", icon: "📚" },
+    { name: "Assignments", href: "/dashboard/student/assignments", icon: "📝" },
+    { name: "Grades", href: "/dashboard/student/grades", icon: "📊" },
+    { name: "Profile", href: "/dashboard/student/profile", icon: "👤" },
   ];
 
   const teacherLinks = [
-    { name: "Dashboard", href: "/teacher", icon: "🏠" },
-    { name: "My Classes", href: "/teacher/classes", icon: "🏫" },
+    { name: "Dashboard", href: "/dashboard/teacher", icon: "🏠" },
+    { name: "My Classes", href: "/dashboard/teacher/classes", icon: "🏫" },
     {
-      name: "Create Assignment",
-      href: "/teacher/assignments/create",
+      name: "Create Homework",
+      href: "/dashboard/teacher/homework/create",
       icon: "➕",
     },
-    { name: "Grade Students", href: "/teacher/grades", icon: "✅" },
-    { name: "Profile", href: "/teacher/profile", icon: "👤" },
+    { name: "All Homework", href: "/dashboard/teacher/homework", icon: "📋" },
+    { name: "Students", href: "/dashboard/teacher/students", icon: "👥" },
+    { name: "Profile", href: "/dashboard/teacher/profile", icon: "👤" },
   ];
 
   const navigation = userRole === "student" ? studentLinks : teacherLinks;
@@ -42,7 +43,9 @@ export default function DashboardLayout({
     <div className="min-h-screen bg-gray-50">
       {/* Mobile sidebar */}
       <div
-        className={`fixed inset-0 flex z-40 md:hidden ${sidebarOpen ? "" : "hidden"}`}
+        className={`fixed inset-0 flex z-40 md:hidden ${
+          sidebarOpen ? "" : "hidden"
+        }`}
       >
         <div
           className="fixed inset-0 bg-gray-600 bg-opacity-75"

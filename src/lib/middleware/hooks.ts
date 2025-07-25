@@ -1,61 +1,46 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { createClient } from "@/lib/database/supabase/client";
+import { authClient } from "@/lib/auth/client";
+import { useRouter } from "next/navigation";
 import type { AuthUser } from "./client";
 
 export function useAuth() {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
-    let supabaseClient: Awaited<ReturnType<typeof createClient>> | null = null;
-
     const getInitialSession = async () => {
       try {
-        supabaseClient = await createClient();
-        const {
-          data: { user },
-          error,
-        } = await supabaseClient.auth.getUser();
+        const { data: session, error } = await authClient.getSession();
 
         if (error) {
           setError(error.message);
           setUser(null);
+          setLoading(false);
           return;
         }
 
-        if (!user) {
+        if (!session?.user) {
           setUser(null);
+          setLoading(false);
           return;
         }
 
-        const [studentResult, teacherResult] = await Promise.all([
-          supabaseClient
-            .from("students")
-            .select("id")
-            .eq("id", user.id)
-            .single(),
-          supabaseClient
-            .from("teachers")
-            .select("id")
-            .eq("id", user.id)
-            .single(),
-        ]);
-
-        let role: "student" | "teacher" | null = null;
-
-        if (studentResult.data) {
-          role = "student";
-        } else if (teacherResult.data) {
-          role = "teacher";
+        // Fetch user role from the database
+        const response = await fetch("/api/auth/user");
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
         }
+
+        const userData = await response.json();
 
         setUser({
-          id: user.id,
-          email: user.email!,
-          role,
+          id: session.user.id,
+          email: session.user.email!,
+          role: userData.role,
         });
       } catch (err) {
         setError(
@@ -67,77 +52,25 @@ export function useAuth() {
       }
     };
 
-    const setupAuthListener = async () => {
-      await getInitialSession();
-
-      if (supabaseClient) {
-        const {
-          data: { subscription },
-        } = supabaseClient.auth.onAuthStateChange(
-          async (
-            event: string,
-            session: { user?: { id: string; email?: string } } | null
-          ) => {
-            if (event === "SIGNED_OUT" || !session?.user) {
-              setUser(null);
-              setLoading(false);
-              return;
-            }
-
-            if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
-              const user = session.user;
-
-              const [studentResult, teacherResult] = await Promise.all([
-                supabaseClient!
-                  .from("students")
-                  .select("id")
-                  .eq("id", user.id)
-                  .single(),
-                supabaseClient!
-                  .from("teachers")
-                  .select("id")
-                  .eq("id", user.id)
-                  .single(),
-              ]);
-
-              let role: "student" | "teacher" | null = null;
-
-              if (studentResult.data) {
-                role = "student";
-              } else if (teacherResult.data) {
-                role = "teacher";
-              }
-
-              setUser({
-                id: user.id,
-                email: user.email!,
-                role,
-              });
-              setLoading(false);
-            }
-          }
-        );
-
-        return () => {
-          subscription.unsubscribe();
-        };
-      }
-    };
-
-    setupAuthListener();
+    getInitialSession();
   }, []);
 
   const signOut = async () => {
     try {
-      const supabase = await createClient();
-      const { error } = await supabase.auth.signOut();
+      setLoading(true);
+      const { error } = await authClient.signOut();
       if (error) {
         setError(error.message);
+      } else {
+        setUser(null);
+        router.push("/auth/sign-in");
       }
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "An unknown error occurred"
       );
+    } finally {
+      setLoading(false);
     }
   };
 

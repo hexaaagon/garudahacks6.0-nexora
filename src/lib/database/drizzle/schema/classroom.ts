@@ -21,10 +21,26 @@ export const classroom = pgTable("classrooms", {
     .$defaultFn(() => nanoid()),
   name: varchar("name", { length: 255 }).notNull(),
   description: text("description"),
+  grade: varchar("grade", { length: 20 }).notNull(), // e.g., "Grade 10", "Grade 11"
+  subjects: text("subjects").array().notNull(), // Array of subjects like ["Math", "Science"]
+  shareCode: varchar("share_code", { length: 20 })
+    .unique()
+    .notNull()
+    .$defaultFn(() => nanoid(10)),
+  adminIds: text("admin_ids")
+    .array()
+    .default(sql`'{}'::text[]`), // Additional admins (max 5)
 
   teacherId: text("teacher_id")
     .notNull()
     .references(() => teacher.id, { onDelete: "cascade" }),
+
+  createdAt: timestamp("created_at")
+    .$defaultFn(() => new Date())
+    .notNull(),
+  updatedAt: timestamp("updated_at")
+    .$defaultFn(() => new Date())
+    .notNull(),
 });
 
 export const classroomSubject = pgTable("classroom_subjects", {

@@ -1,12 +1,10 @@
 import { getUserAndSetupStatus } from "@/lib/auth/server-utils";
-import { SetupForm } from "@/components/setup/SetupForm";
+import { SetupForm } from "@/components/setup/setup-form";
 
 export default async function SetupPage() {
-  // Get user info - consistent with layout
   const { user } = await getUserAndSetupStatus();
 
   if (!user) {
-    // This should not happen due to layout protection, but just in case
     return <div>Loading...</div>;
   }
 

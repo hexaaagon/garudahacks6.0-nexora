@@ -14,7 +14,7 @@ import { user } from "./auth";
 export const teacher = pgTable("teachers", {
   id: text("id")
     .primaryKey()
-    .references(() => user.id),
+    .references(() => user.id, { onDelete: "cascade" }),
 
   classroomIds: text("classroom_ids")
     .array()

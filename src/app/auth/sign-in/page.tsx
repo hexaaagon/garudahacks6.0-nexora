@@ -50,12 +50,12 @@ export default function AuthPage() {
         <CardHeader className="text-center">
           <div className="flex items-center justify-center mb-4">
             <Image
-              src="/images/claiss.svg"
+              src="/images/claisse.svg"
               height={32}
               width={32}
-              alt="Claiss Logo"
+              alt="Claisse Logo"
             />
-            <h1 className="ml-2 text-lg font-semibold">Claiss</h1>
+            <h1 className="ml-2 text-lg font-semibold">Claisse</h1>
           </div>
           <CardTitle className="text-lg">Continue with your account</CardTitle>
           <CardDescription>

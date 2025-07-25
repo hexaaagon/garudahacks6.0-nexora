@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
-
+import Link from "next/link";
 export interface NavbarAction {
   label: string;
   onClick: () => void;
@@ -69,7 +69,10 @@ export function Navbar({
   const defaultActions: NavbarAction[] = [
     { label: "Profile", onClick: () => console.log("Profile clicked") },
     { label: "Settings", onClick: () => console.log("Settings clicked") },
-    { label: "Sign out", onClick: () => console.log("Sign out clicked") },
+    {
+      label: "Sign out",
+      onClick: () => (window.location.href = "/auth/sign-out"),
+    },
   ];
 
   const menuActions = actions.length > 0 ? actions : defaultActions;
@@ -172,9 +175,11 @@ export function Navbar({
 
                 {showAuth && (
                   <div className="p-6 border-t border-border space-y-4">
-                    <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3">
-                      Get Started - FREE
-                    </Button>
+                    <Link href="/auth/sign-in">
+                      <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3">
+                        Get Started - FREE
+                      </Button>
+                    </Link>
                   </div>
                 )}
               </div>

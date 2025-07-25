@@ -15,6 +15,27 @@
       "when": 1753389392725,
       "tag": "0001_classroom-subject",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1753429283771,
+      "tag": "0002_add-student-interests-and-personality-system",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1753432160091,
+      "tag": "0003_add-homework-system-with-submissions",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1753433753973,
+      "tag": "0004_references-delete-fix",
+      "breakpoints": true
     }
   ]
 }

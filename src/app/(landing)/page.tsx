@@ -547,13 +547,15 @@ export default function LandingPage() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-            <Button
-              size="lg"
-              className="group bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-6 text-xl font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-            >
-              Start Teaching Smarter - FREE!
-              <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            <Link href="/auth/sign-in">
+              <Button
+                size="lg"
+                className="group bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-6 text-xl font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                Start Teaching Smarter - FREE!
+                <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
             <Button
               size="lg"
               variant="outline"
@@ -584,7 +586,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <footer className="bg-background border-t border-border text-foreground py-20 px-4 relative overflow-hidden">
+      <footer className="bg-background border-t border-border text-foreground py-20 px-4 relative bottom-0 inset-x-0 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl"></div>
@@ -655,12 +657,12 @@ export default function LandingPage() {
                 <ul className="space-y-3">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
-                      <a
+                      <Link
                         href="#"
                         className="text-muted-foreground hover:text-primary transition-colors duration-200 text-base"
                       >
                         {link}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -672,28 +674,28 @@ export default function LandingPage() {
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-muted-foreground text-base">
                 &copy; 2025 Claisse by Nexora Team. Open source and free
-                forever. Made with ❤️ for Indonesian educators at Garuda Hacks
-                6.0.
+                forever. <br /> Made with ❤️ for Indonesian educators at Garuda
+                Hacks 6.0.
               </p>
               <div className="flex space-x-6 mt-4 md:mt-0">
-                <a
+                <Link
                   href="#"
                   className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
                   Privacy Policy
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
                   Terms of Service
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
                   MIT License
-                </a>
+                </Link>
               </div>
             </div>
           </div>
