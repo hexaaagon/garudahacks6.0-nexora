@@ -23,7 +23,7 @@ export default function AuthPage() {
 
       const signInPromise = authClient.signIn.social({
         provider: "google",
-        callbackURL: "/dashboard",
+        callbackURL: "/",
       });
 
       toast.promise(signInPromise, {
