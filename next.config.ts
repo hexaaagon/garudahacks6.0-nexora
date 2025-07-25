@@ -1,12 +1,20 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    // Disable server components prerendering for middleware-dependent routes
-    serverComponentsExternalPackages: ["better-auth"],
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "/a/**",
+      },
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+        pathname: "/**",
+      },
+    ],
   },
-  // Ensure proper handling of middleware during build
-  output: undefined,
 };
 
 export default nextConfig;

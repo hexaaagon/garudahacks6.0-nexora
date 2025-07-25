@@ -34,17 +34,14 @@ export async function middleware(request: NextRequest) {
   );
 
   let session: Session | null = null;
-  
+
   try {
-    const { data } = await betterFetch<Session>(
-      "/api/auth/get-session",
-      {
-        baseURL: request.nextUrl.origin,
-        headers: {
-          cookie: request.headers.get("cookie") || "", // Forward the cookies from the request
-        },
-      }
-    );
+    const { data } = await betterFetch<Session>("/api/auth/get-session", {
+      baseURL: request.nextUrl.origin,
+      headers: {
+        cookie: request.headers.get("cookie") || "", // Forward the cookies from the request
+      },
+    });
     session = data;
   } catch (error) {
     // Handle API call failure gracefully during build or when server is not available
