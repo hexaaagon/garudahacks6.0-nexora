@@ -1,6 +1,6 @@
 import { getServerUser } from "@/lib/auth/server-utils";
 import DashboardLayout from "@/components/layout/dashboard-layout";
-import { StudentClassesContent } from "@/components/student/StudentClassesContent";
+import { StudentClassesContent } from "@/components/student/student-classes-content";
 
 export default async function StudentClassesPage() {
   const user = await getServerUser();

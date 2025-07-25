@@ -1,6 +1,6 @@
 import { getServerUser } from "@/lib/auth/server-utils";
 import DashboardLayout from "@/components/layout/dashboard-layout";
-import { AssignmentQuestionView } from "@/components/student/AssignmentQuestionView";
+import { AssignmentQuestionView } from "@/components/student/assignment-question-view";
 
 interface AssignmentPageProps {
   params: {

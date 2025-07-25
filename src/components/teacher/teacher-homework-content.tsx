@@ -194,7 +194,7 @@ export function TeacherHomeworkContent({ user }: TeacherHomeworkContentProps) {
             Manage and track all your homework assignments
           </p>
         </div>
-        <Link href="/dashboard/teacher/homework/create">
+        <Link href="/teacher/homework/create">
           <Button className="flex items-center gap-2">
             <Plus className="h-4 w-4" />
             Create Homework
@@ -312,7 +312,7 @@ export function TeacherHomeworkContent({ user }: TeacherHomeworkContentProps) {
                 ? "You haven't created any homework yet."
                 : "No homework matches your current filters."}
             </p>
-            <Link href="/dashboard/teacher/homework/create">
+            <Link href="/teacher/homework/create">
               <Button>
                 <Plus className="h-4 w-4 mr-2" />
                 Create Your First Homework

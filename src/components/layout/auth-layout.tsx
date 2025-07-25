@@ -41,7 +41,7 @@ export default function AuthLayout({
 
         {/* Footer */}
         <div className="text-center">
-          <p className="text-xs text-gray-500">Nexora Educational Platform</p>
+          <p className="text-xs text-gray-500">Claisse Educational Platform</p>
         </div>
       </div>
     </div>

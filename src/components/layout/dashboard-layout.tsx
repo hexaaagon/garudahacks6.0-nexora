@@ -3,6 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/lib/middleware/hooks";
+import type { AuthUser } from "@/lib/middleware/client";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -14,7 +23,7 @@ export default function DashboardLayout({
   userRole,
 }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
 
   const studentLinks = [
     { name: "Dashboard", href: "/dashboard/student", icon: "🏠" },
@@ -25,16 +34,11 @@ export default function DashboardLayout({
   ];
 
   const teacherLinks = [
-    { name: "Dashboard", href: "/dashboard/teacher", icon: "🏠" },
-    { name: "My Classes", href: "/dashboard/teacher/classes", icon: "🏫" },
-    {
-      name: "Create Homework",
-      href: "/dashboard/teacher/homework/create",
-      icon: "➕",
-    },
-    { name: "All Homework", href: "/dashboard/teacher/homework", icon: "📋" },
-    { name: "Students", href: "/dashboard/teacher/students", icon: "👥" },
-    { name: "Profile", href: "/dashboard/teacher/profile", icon: "👤" },
+    { name: "Dashboard", href: "/teacher", icon: "🏠" },
+    { name: "My Classes", href: "/teacher/classes", icon: "🏫" },
+    { name: "All Homework", href: "/teacher/homework", icon: "📋" },
+    { name: "Students", href: "/teacher/students", icon: "👥" },
+    { name: "Profile", href: "/teacher/profile", icon: "👤" },
   ];
 
   const navigation = userRole === "student" ? studentLinks : teacherLinks;
@@ -76,7 +80,8 @@ export default function DashboardLayout({
           <SidebarContent
             navigation={navigation}
             userRole={userRole}
-            onSignOut={signOut}
+            user={user}
+            signOut={signOut}
           />
         </div>
       </div>
@@ -86,7 +91,8 @@ export default function DashboardLayout({
         <SidebarContent
           navigation={navigation}
           userRole={userRole}
-          onSignOut={signOut}
+          user={user}
+          signOut={signOut}
         />
       </div>
 
@@ -137,11 +143,13 @@ interface NavigationItem {
 function SidebarContent({
   navigation,
   userRole,
-  onSignOut,
+  user,
+  signOut,
 }: {
   navigation: NavigationItem[];
   userRole: string;
-  onSignOut: () => void;
+  user: AuthUser | null;
+  signOut: () => Promise<void>;
 }) {
   return (
     <div className="flex-1 flex flex-col min-h-0 bg-white border-r border-gray-200">
@@ -166,19 +174,69 @@ function SidebarContent({
       </div>
       <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
         <div className="flex-shrink-0 w-full group block">
-          <div className="flex items-center">
-            <div className="ml-3">
-              <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-                {userRole.charAt(0).toUpperCase() + userRole.slice(1)} Account
-              </p>
-            </div>
-          </div>
-          <button
-            onClick={onSignOut}
-            className="mt-2 w-full text-left text-sm text-gray-500 hover:text-gray-700"
-          >
-            Sign out
-          </button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="w-full text-left hover:bg-gray-50 rounded-md p-2 transition-colors">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <div className="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
+                      <span className="text-sm font-medium text-gray-700">
+                        {user?.email?.charAt(0).toUpperCase() || "U"}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="ml-3 flex-1">
+                    <p className="text-sm font-medium text-gray-700">
+                      {user?.email || "User"}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {userRole.charAt(0).toUpperCase() + userRole.slice(1)}{" "}
+                      Account
+                    </p>
+                  </div>
+                  <div className="ml-2">
+                    <svg
+                      className="h-4 w-4 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href={`/${userRole}/profile`} className="w-full">
+                  <span className="mr-2">👤</span>
+                  Profile
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/settings" className="w-full">
+                  <span className="mr-2">⚙️</span>
+                  Settings
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={signOut}
+                className="text-red-600 focus:text-red-600"
+              >
+                <span className="mr-2">🚪</span>
+                Sign out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </div>
