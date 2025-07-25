@@ -1,75 +1,117 @@
 import { Hono } from "hono";
+import { supabaseService } from "@nexora/database";
+
 const Routes_student = new Hono();
-
-import { drizzle } from "@nexora/database";
-import { student } from "@nexora/database/drizzle/schema/student";
-import { userDetails } from "@nexora/database/drizzle/schema/userDetails";
-
-const { db } = drizzle;
 
   
 
 //make
 Routes_student.post("/", async (c) => {
   const data = await c.req.json();
-  await db.insert(userDetails).values({
-    role: data.role,
-    id: data.id
-  });
-  return c.text("student created!");
+  const { data: newUser, error } = await supabaseService
+    .from("user_details")
+    .insert({
+      role: data.role,
+      id: data.id
+    })
+    .select()
+    .single();
+
+  if (error) {
+    return c.json({ error: error.message }, 400);
+  }
+  return c.json(newUser);
 });
 
-// get all classrooms
+// get all students
 Routes_student.get("/", async (c) => {
-  const students = await db.select().from(userDetails);
+  const { data: students, error } = await supabaseService
+    .from("user_details")
+    .select("*")
+    .eq("role", "student");
+
+  if (error) {
+    return c.json({ error: error.message }, 400);
+  }
   return c.json(students);
 });
 
-//class stuff
+//student operations
 Routes_student.delete("/:token", async (c) => {
   const token = c.req.param("token");
   if (!token) {
-    return c.text("No student token provided", 400);
+    return c.json({ error: "No student token provided" }, 400);
   }
-  await db.delete(student).where(student.token.eq(token));
-  return c.text("student deleted with token: " + token);
+
+  const { error } = await supabaseService
+    .from("students")
+    .delete()
+    .eq("token", token);
+
+  if (error) {
+    return c.json({ error: error.message }, 400);
+  }
+  return c.json({ message: "Student deleted successfully" });
 });
 
 Routes_student.get("/:token", async (c) => {
   const token = c.req.param("token");
   if (!token) {
-    return c.text("No student token provided", 400);
+    return c.json({ error: "No student token provided" }, 400);
   }
-  const result = await db.select().from(student).where(student.token.eq(token));
-  return c.json(result);
+
+  const { data: student, error } = await supabaseService
+    .from("students")
+    .select("*")
+    .eq("token", token)
+    .single();
+
+  if (error) {
+    return c.json({ error: error.message }, 400);
+  }
+  return c.json(student);
 });
 
 Routes_student.put("/:token", async (c) => {
   const token = c.req.param("token");
   if (!token) {
-    return c.text("No student token provided", 400);
+    return c.json({ error: "No student token provided" }, 400);
   }
+
   const data = await c.req.json();
-  await db
-    .update(student)
-    .set({
+  const { data: updatedStudent, error } = await supabaseService
+    .from("students")
+    .update({
       name: data.name,
       grade: data.grade,
       classroom: data.classroom,
     })
-    .where(student.token.eq(token));
-  return c.text(`student updated with token: ${token}`);
+    .eq("token", token)
+    .select()
+    .single();
+
+  if (error) {
+    return c.json({ error: error.message }, 400);
+  }
+  return c.json(updatedStudent);
 });
 
 Routes_student.post("/:token", async (c) => {
   const token = c.req.param("token");
   if (!token) {
-    return c.text("No student token provided", 400);
+    return c.json({ error: "No student token provided" }, 400);
   }
-  await db.insert(student).values({
-    token,
-  });
-  return c.text(`student join classrom with token: ${token}`);
+
+  const { data: newStudent, error } = await supabaseService
+    .from("students")
+    .insert({ token })
+    .select()
+    .single();
+
+  if (error) {
+    return c.json({ error: error.message }, 400);
+  }
+  return c.json(newStudent);
 });
 
 export { Routes_student };
