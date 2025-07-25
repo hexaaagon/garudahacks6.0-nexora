@@ -1,3 +1,4 @@
+import DashboardLayout from "@/components/layout/dashboard-layout";
 import DashboardTemplate from "@/components/layout/dashboard-template";
 
 interface TemplateProps {
@@ -6,6 +7,8 @@ interface TemplateProps {
 
 export default function Template({ children }: TemplateProps) {
   return (
-    <DashboardTemplate requiredRole="student">{children}</DashboardTemplate>
+    <DashboardTemplate requiredRole="student">
+      <DashboardLayout userRole="student">{children}</DashboardLayout>
+    </DashboardTemplate>
   );
 }

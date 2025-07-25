@@ -411,13 +411,104 @@ export default function LandingPage() {
 
           {/* Interactive Demo CTA */}
           <div className="text-center mt-16">
-            <Button
-              size="lg"
-              className="group bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-            >
-              <PlayCircle className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform" />
-              See It In Action
-            </Button>
+            <Link href="/">
+              <Button
+                size="lg"
+                className="group bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                <PlayCircle className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform" />
+                See It In Action
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section
+        id="how-it-works"
+        className="py-32 px-4 relative overflow-hidden bg-gradient-to-b from-accent/10 to-background"
+      >
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="relative container mx-auto max-w-7xl">
+          <div className="text-center mb-20">
+            <Badge className="mb-6 bg-primary/10 text-primary border-primary/20">
+              <Layers className="w-4 h-4 mr-2" />
+              Simple Process
+            </Badge>
+            <h2 className="text-5xl md:text-6xl font-bold text-foreground mb-8 tracking-tight">
+              How{" "}
+              <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                Claisse Works
+              </span>
+            </h2>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+              Get started in just 3 simple steps and transform your teaching
+              experience
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-12">
+            {[
+              {
+                step: "01",
+                title: "Upload Your Content",
+                description:
+                  "Simply paste 1-5 paragraphs of your subject matter. Our AI will analyze and understand the key concepts.",
+                icon: BookOpen,
+                color: "primary",
+              },
+              {
+                step: "02",
+                title: "AI Generates Questions",
+                description:
+                  "Our advanced AI creates personalized multiple-choice questions and essays tailored to each student's learning style.",
+                icon: Brain,
+                color: "purple-500",
+              },
+              {
+                step: "03",
+                title: "Students Learn & Grow",
+                description:
+                  "Students receive customized assignments that adapt to their personality and learning preferences, improving engagement.",
+                icon: TrendingUp,
+                color: "green-500",
+              },
+            ].map((item, index) => (
+              <div key={index} className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl blur-xl group-hover:blur-lg transition-all duration-500"></div>
+                <Card className="relative border border-border shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 bg-card/80 backdrop-blur-sm p-8">
+                  <div className="text-center">
+                    <div className="relative mb-8">
+                      <div className="text-6xl font-bold text-muted-foreground/20 absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        {item.step}
+                      </div>
+                      <div
+                        className={`w-20 h-20 bg-${
+                          item.color === "primary" ? "primary" : item.color
+                        }/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 relative z-10`}
+                      >
+                        <item.icon
+                          className={`w-10 h-10 text-${
+                            item.color === "primary" ? "primary" : item.color
+                          }`}
+                        />
+                      </div>
+                    </div>
+                    <h3 className="text-2xl font-bold text-card-foreground mb-4">
+                      {item.title}
+                    </h3>
+                    <p className="text-muted-foreground text-lg leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+                </Card>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -425,7 +516,7 @@ export default function LandingPage() {
       {/* Benefits - Enhanced Stats */}
       <section
         id="benefits"
-        className="py-32 px-4 relative overflow-hidden bg-gradient-to-b from-white to-gray-50"
+        className="py-32 px-4 relative overflow-hidden bg-gradient-to-b from-background to-accent/10"
       >
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-l from-green-200/20 to-transparent rounded-full blur-3xl"></div>
@@ -434,19 +525,18 @@ export default function LandingPage() {
 
         <div className="relative container mx-auto max-w-7xl">
           <div className="text-center mb-20">
-            <Badge className="mb-6 bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 border-green-200">
+            <Badge className="mb-6 bg-green-100/80 text-green-800 border-green-200">
               <TrendingUp className="w-4 h-4 mr-2" />
-              Proven Results
+              Key Benefits
             </Badge>
-            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-8 tracking-tight">
-              Why Teachers Love{" "}
+            <h2 className="text-5xl md:text-6xl font-bold text-foreground mb-8 tracking-tight">
+              Why Teachers Choose{" "}
               <span className="bg-gradient-to-r from-green-500 to-emerald-600 bg-clip-text text-transparent">
                 Claisse
               </span>
             </h2>
-            <p className="text-xl md:text-2xl text-gray-600 leading-relaxed">
-              What we expect if this platform is widely adopted by Indonesian
-              teachers
+            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
+              Experience the power of AI-driven personalized education
             </p>
           </div>
 
@@ -454,64 +544,95 @@ export default function LandingPage() {
             {[
               {
                 icon: CheckCircle,
-                percentage: "90%",
-                description: "Time saved on content creation",
+                title: "Save Time",
+                description:
+                  "Reduce content creation time by 90% with AI-generated questions",
                 color: "green",
                 delay: "0",
               },
               {
                 icon: Star,
-                percentage: "87%",
-                description: "Student engagement increase",
+                title: "Boost Engagement",
+                description:
+                  "Personalized content increases student participation by 87%",
                 color: "blue",
                 delay: "100",
               },
               {
                 icon: Target,
-                percentage: "93%",
-                description: "Students receive personalized content",
+                title: "Personalized Learning",
+                description:
+                  "Every student gets content tailored to their learning style",
                 color: "purple",
                 delay: "200",
               },
               {
-                icon: BookOpen,
-                percentage: "30+",
-                description: "Subjects supported",
+                icon: Shield,
+                title: "Always Free",
+                description:
+                  "100% free forever - no hidden costs or subscriptions",
                 color: "orange",
                 delay: "300",
               },
-            ].map((stat, index) => (
+            ].map((benefit, index) => (
               <Card
                 key={index}
-                className={`group border-0 shadow-lg hover:shadow-2xl text-center p-8 transition-all duration-500 hover:scale-105 bg-white/80 backdrop-blur-sm animate-fade-in-up`}
-                style={{ animationDelay: `${stat.delay}ms` }}
+                className={`group border-0 shadow-lg hover:shadow-2xl text-center p-8 transition-all duration-500 hover:scale-105 bg-card/80 backdrop-blur-sm animate-fade-in-up`}
+                style={{ animationDelay: `${benefit.delay}ms` }}
               >
                 <div
-                  className={`w-16 h-16 bg-${stat.color}-100 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}
+                  className={`w-16 h-16 bg-${benefit.color}-100/80 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}
                 >
-                  <stat.icon className={`w-8 h-8 text-${stat.color}-600`} />
+                  <benefit.icon
+                    className={`w-8 h-8 text-${benefit.color}-600`}
+                  />
                 </div>
-                <h3 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {stat.percentage}
+                <h3 className="text-2xl font-bold text-card-foreground mb-4 group-hover:text-primary transition-colors">
+                  {benefit.title}
                 </h3>
-                <p className="text-gray-600 text-lg leading-relaxed">
-                  {stat.description}
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  {benefit.description}
                 </p>
               </Card>
             ))}
           </div>
 
-          {/* Trust Indicators */}
-          <div className="mt-20 text-center">
-            <p className="text-sm text-gray-500 mb-8 uppercase tracking-wide font-semibold">
-              Trusted by educators across Indonesia
-            </p>
-            <div className="flex justify-center items-center space-x-8 opacity-60">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <div
-                  key={i}
-                  className="w-24 h-12 bg-gray-200 rounded-lg animate-pulse"
-                ></div>
+          {/* Additional Benefits Grid */}
+          <div className="mt-20 grid md:grid-cols-2 gap-12">
+            <div className="space-y-6">
+              <h3 className="text-3xl font-bold text-foreground mb-8">
+                For Teachers
+              </h3>
+              {[
+                "Create personalized assignments in minutes",
+                "Automatically generate diverse question types",
+                "Track student progress with AI insights",
+                "Focus on teaching, not content creation",
+              ].map((benefit, index) => (
+                <div key={index} className="flex items-center space-x-4">
+                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="w-5 h-5 text-primary" />
+                  </div>
+                  <p className="text-muted-foreground text-lg">{benefit}</p>
+                </div>
+              ))}
+            </div>
+            <div className="space-y-6">
+              <h3 className="text-3xl font-bold text-foreground mb-8">
+                For Students
+              </h3>
+              {[
+                "Receive content matched to learning style",
+                "Engage with personalized questions",
+                "Build confidence through adaptive learning",
+                "Learn at your own pace and preference",
+              ].map((benefit, index) => (
+                <div key={index} className="flex items-center space-x-4">
+                  <div className="w-8 h-8 bg-green-500/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                  </div>
+                  <p className="text-muted-foreground text-lg">{benefit}</p>
+                </div>
               ))}
             </div>
           </div>
@@ -621,32 +742,26 @@ export default function LandingPage() {
 
             {[
               {
-                title: "Product",
-                links: [
-                  "Features",
-                  "Demo",
-                  "Documentation",
-                  "API",
-                  "Community",
-                ],
-              },
-              {
                 title: "Support",
                 links: [
-                  "Help Center",
-                  "Contact Us",
-                  "GitHub",
-                  "Discord",
-                  "Bug Reports",
+                  {
+                    text: "Contact Us",
+                    href: "mailto:nexoracontact@gmail.com",
+                  },
+                  {
+                    text: "GitHub",
+                    href: "https://github.com/hexaaagon/claiss",
+                  },
                 ],
               },
               {
                 title: "Team",
                 links: [
-                  "About Nexora",
-                  "Garuda Hacks 6.0",
-                  "Contributors",
-                  "Open Source",
+                  { text: "Garuda Hack", href: "https://garudahacks.com" },
+                  {
+                    text: "Open Source",
+                    href: "https://github.com/hexaaagon/claiss",
+                  },
                 ],
               },
             ].map((section, index) => (
@@ -657,12 +772,29 @@ export default function LandingPage() {
                 <ul className="space-y-3">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
-                      <Link
-                        href="#"
-                        className="text-muted-foreground hover:text-primary transition-colors duration-200 text-base"
-                      >
-                        {link}
-                      </Link>
+                      {typeof link === "string" ? (
+                        <Link
+                          href="#"
+                          className="text-muted-foreground hover:text-primary transition-colors duration-200 text-base"
+                        >
+                          {link}
+                        </Link>
+                      ) : (
+                        <Link
+                          href={link.href}
+                          className="text-muted-foreground hover:text-primary transition-colors duration-200 text-base"
+                          target={
+                            link.href.startsWith("http") ? "_blank" : undefined
+                          }
+                          rel={
+                            link.href.startsWith("http")
+                              ? "noopener noreferrer"
+                              : undefined
+                          }
+                        >
+                          {link.text}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
