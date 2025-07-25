@@ -17,7 +17,7 @@ export function useAuth() {
         const { data: session, error } = await authClient.getSession();
 
         if (error) {
-          setError(error.message);
+          setError(error.message || null);
           setUser(null);
           setLoading(false);
           return;
@@ -60,7 +60,7 @@ export function useAuth() {
       setLoading(true);
       const { error } = await authClient.signOut();
       if (error) {
-        setError(error.message);
+        setError(error.message || null);
       } else {
         setUser(null);
         router.push("/auth/sign-in");
