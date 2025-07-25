@@ -29,6 +29,11 @@
       "types": "./src/drizzle/schema/account.ts",
       "import": "./src/drizzle/schema/account.ts",
       "default": "./src/drizzle/schema/account.ts"
+    },
+    "./supabase": {
+      "types": "./src/supabase/index.ts",
+      "import": "./src/supabase/index.ts",
+      "default": "./src/supabase/index.ts"
     }
   },
   "scripts": {
